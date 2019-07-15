@@ -1,0 +1,38 @@
+@prefix tdb:   <http://jena.hpl.hp.com/2008/tdb#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ja:    <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix fuseki: <http://jena.apache.org/fuseki#> .
+
+<#service1> rdf:type fuseki:Service ;
+    fuseki:name                       "kg_demo_movie" ;     
+    fuseki:serviceQuery               "sparql", "query" ; 
+    fuseki:serviceReadGraphStore      "get" ;
+    fuseki:dataset                   <#dataset> ;
+    .
+
+<#dataset> rdf:type ja:RDFDataset ;
+	ja:defaultGraph <#modelInf> ;
+	.
+	
+<#modelInf> rdf:type ja:InfModel ;
+    #本体文件的路径
+    ja:defaultGraph
+      [ rdfs:label "ontology.ttl" ;
+        a ja:MemoryModel ;
+        ja:content [ ja:externalContent <file:///F:/apache-jena-fuseki-3.12.0/run/databases/ontology.ttl> ] ;
+      ] ;
+    #ja:content [ ja:externalContent <file:///F:/apache-jena-fuseki-3.12.0/run/databases/ontology.ttl> ] ;
+
+    #关闭OWL推理机
+    #ja:reasoner [ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLFBRuleReasoner>] .
+
+	ja:reasoner [ ja:reasonerURL <http://jena.hpl.hp.com/2003/GenericRuleReasoner> ; 
+	ja:rulesFrom <file:///F:/apache-jena-fuseki-3.12.0/run/databases/rules.ttl> ] ;
+	ja:baseModel <#g> ;
+	.
+	
+<#g> rdf:type tdb:GraphTDB ;
+    tdb:location "F:/apache-jena-3.12.0/tdb" ;
+    tdb:unionDefaultGraph true ; 
+	.
