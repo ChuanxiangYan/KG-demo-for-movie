@@ -30,7 +30,8 @@ class Tagger:
         for p in dict_paths:
             jieba.load_userdict(p)
 
-        jieba.re_han_default = re.compile('(.+)', re.U)  # 修改格式
+        pseg.re_han_internal = re.compile("(.+)")  # 修改格式
+        # jieba.re_userdict = re.compile('^(.+?)(\u0040\u0040[0-9]+)?(\u0040\u0040[a-z]+)?$', re.U)
 
         # TODO jieba不能正确切分的词语，我们人工调整其频率。
         jieba.suggest_freq(('喜剧', '电影'), True)

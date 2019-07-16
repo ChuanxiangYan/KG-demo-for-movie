@@ -9,8 +9,9 @@ import jieba.posseg as pseg
 # jieba.del_word('自定义词')
 
 test_sent = 'Gong Li是谁'
-jieba.re_han_default = re.compile('(.+)', re.U)  # 修改格式
-# jieba.re_han_internal = re.compile("(.+)")
+# jieba.re_han_default = re.compile('(.+)', re.U)  # 修改格式
+# # jieba.re_han_cut_all = re.compile('(.+)', re.U)  # 修改格式
+pseg.re_han_internal = re.compile("(.+)")
 words = pseg.cut(test_sent)
 # print('/'.join(words.token))
 for i in words:
