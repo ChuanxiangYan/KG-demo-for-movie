@@ -113,9 +113,14 @@ class QuestionSet:
         sparql = None
         for w in word_objects:
             if w.pos == pos_person:
-                e = u"?s :personName '{person}'." \
-                    u"?s :hasActedIn ?m." \
-                    u"?m :movieTitle ?x".format(person=w.token)
+                if re.match(r'[A-Za-z]', w.token) is None:
+                    e = u"?s :personName '{person}'." \
+                        u"?s :hasActedIn ?m." \
+                        u"?m :movieTitle ?x".format(person=w.token)
+                else:
+                    e = u"?s :personEnglishName '{person}'." \
+                        u"?s :hasActedIn ?m." \
+                        u"?m :movieTitle ?x".format(person=w.token)
 
                 sparql = SPARQL_SELECT_TEM.format(prefix=SPARQL_PREXIX,
                                                   select=select,
